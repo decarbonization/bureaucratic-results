@@ -17,13 +17,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import { describe, expect, it } from "@jest/globals";
-import { meaningOfLife } from "../lib";
+export * from "./air-now-token";
+export * from "./models";
+export * from "./queries";
 
-describe("serene-front module", () => {
-    describe("#meaningOfLife", () => {
-        it("should return the meaning of life", () => {
-            expect(meaningOfLife()).toStrictEqual(42);
-        });
-    });
-});

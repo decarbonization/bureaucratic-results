@@ -17,4 +17,33 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-export * from "./air-now";
+import { SereneAuthority, SereneAuthorityAuthenticateOptions, SereneAuthorityRefreshOptions } from "serene-front";
+
+export interface AirNowTokenOptions {
+    readonly apiKey: string;
+}
+
+export class AirNowToken implements SereneAuthority {
+    constructor(
+        private readonly apiKey: string
+    ) {
+    }
+
+    get retryLimit(): number {
+        return 0;
+    }
+
+    get isValid(): boolean {
+        return true;
+    }
+
+    async refresh({ }: SereneAuthorityRefreshOptions): Promise<void> {
+        /* do nothing */
+    }
+
+    async authenticate({ fetchRequest }: SereneAuthorityAuthenticateOptions): Promise<Request> {
+        const url = new URL(fetchRequest.url);
+        url.searchParams.set("api_key", this.apiKey);
+        return new Request(url, fetchRequest);
+    }
+}

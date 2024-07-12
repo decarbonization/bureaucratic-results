@@ -17,4 +17,24 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-export * from "./air-now";
+export const enum AqiCategory {
+    good = 1,
+    moderate = 2,
+    unhealthyForSensitiveGroups = 3,
+    unhealthy = 4,
+    veryUnhealthy = 5,
+    hazardous = 6,
+    unavailable = 7,
+}
+
+export const enum AqiReadingType {
+    ozone = "O3",
+    fineParticles = "PM2.5",
+    coarseParticles = "PM10",
+}
+
+export interface AqiReading {
+    readonly type: AqiReadingType;
+    readonly category: AqiCategory;
+    readonly aqi: number;
+}

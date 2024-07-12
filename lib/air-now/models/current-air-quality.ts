@@ -17,4 +17,16 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-export * from "./air-now";
+import { LocationCoordinates } from "serene-front/models";
+import { AqiCategory, AqiReading } from "./core";
+
+export interface CurrentAirQuality {
+    readonly asOf: Date;
+    readonly timeZone: string;
+    readonly location: LocationCoordinates;
+    readonly reportingArea: string;
+    readonly stateCode: string;
+    readonly aqi: number;
+    readonly category: AqiCategory;
+    readonly readings: readonly AqiReading[];
+}

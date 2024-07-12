@@ -17,4 +17,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-export * from "./air-now";
+export * from "./air-quality-forecast";
+export * from "./core";
+export * from "./current-air-quality";
+
