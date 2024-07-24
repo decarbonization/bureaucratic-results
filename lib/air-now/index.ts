@@ -17,7 +17,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-export * from "./air-now-token";
+export * from "./air-now-api-key";
 export * from "./models";
 export * from "./queries";
 

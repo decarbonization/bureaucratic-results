@@ -42,7 +42,7 @@ describe("air-now#raw#current-air-quality module", () => {
         const subject = currentAirQualityFrom(raw);
 
         it("should translate date", () => {
-            expect(subject.asOf).toStrictEqual(new Date("2024-06-27T01:00:00.000Z"));
+            expect(subject.asOf).toStrictEqual(new Date("2024-06-28T01:00:00.000Z"));
         });
 
         it("should translate location", () => {

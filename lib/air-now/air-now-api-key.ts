@@ -18,12 +18,9 @@
  */
 
 import { SereneAuthority, SereneAuthorityAuthenticateOptions, SereneAuthorityRefreshOptions } from "serene-front";
+import { setRequestSearchParams } from "serene-front/urls";
 
-export interface AirNowTokenOptions {
-    readonly apiKey: string;
-}
-
-export class AirNowToken implements SereneAuthority {
+export class AirNowApiKey implements SereneAuthority {
     constructor(
         private readonly apiKey: string
     ) {
@@ -42,8 +39,8 @@ export class AirNowToken implements SereneAuthority {
     }
 
     async authenticate({ fetchRequest }: SereneAuthorityAuthenticateOptions): Promise<Request> {
-        const url = new URL(fetchRequest.url);
-        url.searchParams.set("api_key", this.apiKey);
-        return new Request(url, fetchRequest);
+        return setRequestSearchParams(fetchRequest, [
+            ["api_key", this.apiKey],
+        ]);
     }
 }

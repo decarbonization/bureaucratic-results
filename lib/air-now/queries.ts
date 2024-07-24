@@ -21,7 +21,7 @@ import convert from "convert";
 import { format } from "date-fns";
 import { SereneRequest, SereneRequestParseOptions, SereneRequestPrepareOptions } from "serene-front";
 import { LocationCoordinates } from "serene-front/models";
-import { AirNowToken } from "./air-now-token";
+import { AirNowApiKey } from "./air-now-api-key";
 import { AirQualityForecast } from "./models/air-quality-forecast";
 import { CurrentAirQuality } from "./models/current-air-quality";
 import { airQualityForecastFrom } from "./raw/air-quality-forecast";
@@ -34,11 +34,11 @@ export interface CurrentAirQualityQueryOptions {
     readonly distance?: number;
 }
 
-export class CurrentAirQualityQuery implements SereneRequest<AirNowToken, CurrentAirQuality> {
+export class CurrentAirQualityQuery implements SereneRequest<AirNowApiKey, CurrentAirQuality> {
     constructor(private readonly options: CurrentAirQualityQueryOptions) {
     }
 
-    prepare({ }: SereneRequestPrepareOptions<AirNowToken>): Request {
+    prepare({ }: SereneRequestPrepareOptions<AirNowApiKey>): Request {
         const url = new URL(`${baseUrl}/observation/latLong/current`);
         url.searchParams.set("format", "application/json");
         url.searchParams.set("latitude", String(this.options.location.latitude));
@@ -49,7 +49,7 @@ export class CurrentAirQualityQuery implements SereneRequest<AirNowToken, Curren
         return new Request(url);
     }
 
-    async parse({ fetchResponse }: SereneRequestParseOptions<AirNowToken>): Promise<CurrentAirQuality> {
+    async parse({ fetchResponse }: SereneRequestParseOptions<AirNowApiKey>): Promise<CurrentAirQuality> {
         const raw = await fetchResponse.json();
         return currentAirQualityFrom(raw);
     }
@@ -61,11 +61,11 @@ export interface AirQualityForecastQueryOptions {
     readonly date?: Date;
 }
 
-export class AirQualityForecastQuery implements SereneRequest<AirNowToken, AirQualityForecast> {
+export class AirQualityForecastQuery implements SereneRequest<AirNowApiKey, AirQualityForecast> {
     constructor(private readonly options: AirQualityForecastQueryOptions) {
     }
 
-    prepare({ }: SereneRequestPrepareOptions<AirNowToken>): Request {
+    prepare({ }: SereneRequestPrepareOptions<AirNowApiKey>): Request {
         const url = new URL(`${baseUrl}/forecast/latLong`);
         url.searchParams.set("format", "application/json");
         url.searchParams.set("latitude", String(this.options.location.latitude));
@@ -79,7 +79,7 @@ export class AirQualityForecastQuery implements SereneRequest<AirNowToken, AirQu
         return new Request(url);
     }
 
-    async parse({ fetchResponse }: SereneRequestParseOptions<AirNowToken>): Promise<AirQualityForecast> {
+    async parse({ fetchResponse }: SereneRequestParseOptions<AirNowApiKey>): Promise<AirQualityForecast> {
         const raw = await fetchResponse.json();
         return airQualityForecastFrom(raw);
     }

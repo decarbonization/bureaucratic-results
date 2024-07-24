@@ -17,8 +17,10 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import { getTimezoneOffset } from "date-fns-tz";
 import { CurrentAirQuality } from "../models/current-air-quality";
-import { RawCurrentObservationResponse } from "./responses";
+import { RawCurrentObservation, RawCurrentObservationResponse } from "./responses";
+import { unabbreviateTimeZone } from "./time-zone";
 
 export function currentAirQualityFrom(raw: RawCurrentObservationResponse): CurrentAirQuality {
     if (raw.length === 0) {
@@ -26,8 +28,7 @@ export function currentAirQualityFrom(raw: RawCurrentObservationResponse): Curre
     }
 
     const reference = raw[0];
-    const asOf = new Date(reference.DateObserved);
-    asOf.setHours(reference.HourObserved);
+    const asOf = asOfFrom(reference);
     const timeZone = reference.LocalTimeZone;
     const location = {
         latitude: reference.Latitude,
@@ -52,4 +53,20 @@ export function currentAirQualityFrom(raw: RawCurrentObservationResponse): Curre
         category,
         readings,
     };
+}
+
+function asOfFrom(raw: RawCurrentObservation): Date {
+    const datePieces = raw.DateObserved.split("-");
+    if (datePieces.length !== 3) {
+        throw new RangeError(`<${raw.DateObserved}> is not a valid date`);
+    }
+    const year = parseInt(datePieces[0], 10);
+    const month = parseInt(datePieces[1], 10);
+    const day = parseInt(datePieces[2], 10);
+    const hour = raw.HourObserved;
+    const timeZoneName = unabbreviateTimeZone(raw.LocalTimeZone);
+    if (timeZoneName === undefined) {
+        throw new Error(`Unknown time zone <${raw.LocalTimeZone}>`);
+    }
+    return new Date(Date.UTC(year, month - 1, day, hour) - getTimezoneOffset(timeZoneName));
 }
