@@ -18,6 +18,7 @@
  */
 
 import { addDays } from "date-fns";
+import { LocationCoordinates } from "serene-front/data";
 import { AirQualityForecast, AirQualityForecastDay } from "../models/air-quality-forecast";
 import { RawForecast, RawForecastResponse } from "./responses";
 
@@ -31,10 +32,7 @@ export function airQualityForecastFrom(raw: RawForecastResponse): AirQualityFore
     for (const [forecastStart, raw] of rawByDate) {
         const forecastEnd = addDays(forecastStart, 1);
         const reference = raw[0];
-        const location = {
-            latitude: reference.Latitude,
-            longitude: reference.Longitude,
-        };
+        const location = new LocationCoordinates(reference.Latitude, reference.Longitude);
         const reportingArea = reference.ReportingArea;
         const stateCode = reference.StateCode;
         const readings = raw.map(o => ({

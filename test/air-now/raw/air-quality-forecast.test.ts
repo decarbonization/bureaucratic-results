@@ -1,4 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
+import { LocationCoordinates } from 'serene-front/data';
 import { AqiCategory, AqiReadingType } from '../../../lib/air-now/models';
 import { airQualityForecastFrom } from '../../../lib/air-now/raw/air-quality-forecast';
 import { RawForecastResponse } from '../../../lib/air-now/raw/responses';
@@ -121,7 +122,8 @@ describe("air-now#raw#air-quality-forecast module", () => {
         });
 
         it("should translate location", () => {
-            expect(subject.days.map(day => day.location)).toStrictEqual([
+            expect(subject.days.every(day => day.location instanceof LocationCoordinates));
+            expect(subject.days.map(day => day.location.toJSON())).toStrictEqual([
                 { latitude: 40.7834, longitude: -73.9662 },
                 { latitude: 40.7834, longitude: -73.9662 },
                 { latitude: 40.7834, longitude: -73.9662 },

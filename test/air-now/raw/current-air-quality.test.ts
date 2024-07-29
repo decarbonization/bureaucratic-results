@@ -1,5 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
-import { AqiCategory, AqiReadingType } from '../../../lib/air-now/models';
+import { LocationCoordinates } from 'serene-front/data';
+import { AqiCategory, AqiReadingType } from '../../../lib/air-now';
 import { currentAirQualityFrom } from '../../../lib/air-now/raw/current-air-quality';
 import { RawCurrentObservationResponse } from '../../../lib/air-now/raw/responses';
 
@@ -46,7 +47,8 @@ describe("air-now#raw#current-air-quality module", () => {
         });
 
         it("should translate location", () => {
-            expect(subject.location).toStrictEqual({ latitude: 40.7834, longitude: -73.9662 });
+            expect(subject.location instanceof LocationCoordinates);
+            expect(subject.location.toJSON()).toStrictEqual({ latitude: 40.7834, longitude: -73.9662 });
         });
 
         it("should average AQI", () => {

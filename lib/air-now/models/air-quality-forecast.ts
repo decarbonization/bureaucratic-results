@@ -17,7 +17,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import { LocationCoordinates } from "serene-front/models";
+import { LocationCoordinates } from "serene-front/data";
 import { AqiReading } from "./core";
 
 export interface AirQualityForecastDay {

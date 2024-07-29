@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import { AirNowApiKey } from '../../lib';
+import { AirNowApiKey } from '../../lib/air-now';
 
 describe("air-now module", () => {
     describe("#AirNowApiKey", () => {

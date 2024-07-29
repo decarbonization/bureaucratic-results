@@ -18,6 +18,7 @@
  */
 
 import { getTimezoneOffset } from "date-fns-tz";
+import { LocationCoordinates } from "serene-front/data";
 import { CurrentAirQuality } from "../models/current-air-quality";
 import { RawCurrentObservation, RawCurrentObservationResponse } from "./responses";
 import { unabbreviateTimeZone } from "./time-zone";
@@ -30,10 +31,7 @@ export function currentAirQualityFrom(raw: RawCurrentObservationResponse): Curre
     const reference = raw[0];
     const asOf = asOfFrom(reference);
     const timeZone = reference.LocalTimeZone;
-    const location = {
-        latitude: reference.Latitude,
-        longitude: reference.Longitude,
-    };
+    const location = new LocationCoordinates(reference.Latitude, reference.Longitude);
     const reportingArea = reference.ReportingArea;
     const stateCode = reference.StateCode;
     const aqi = Math.round(raw.reduce((acc, o) => acc + o.AQI, 0) / raw.length);

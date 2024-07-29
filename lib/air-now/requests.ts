@@ -20,8 +20,8 @@
 import convert from "convert";
 import { format } from "date-fns";
 import { SereneRequest, SereneRequestParseOptions, SereneRequestPrepareOptions } from "serene-front";
-import { LocationCoordinates } from "serene-front/models";
-import { AirNowApiKey } from "./air-now-api-key";
+import { LocationCoordinates } from "serene-front/data";
+import { AirNowApiKey } from "./api-key";
 import { AirQualityForecast } from "./models/air-quality-forecast";
 import { CurrentAirQuality } from "./models/current-air-quality";
 import { airQualityForecastFrom } from "./raw/air-quality-forecast";
